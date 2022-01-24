@@ -20,3 +20,15 @@ after_success:
   - docker push callrua/multi-nginx
   - docker push callrua/multi-server
   - docker push callrua/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'eu-west-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: "elasticbeanstalk-us-east-1-908244853628"
+  bucket_path: 'docker-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
