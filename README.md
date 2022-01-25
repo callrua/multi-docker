@@ -9,29 +9,29 @@ Note: you must set-up an AWS Elastic Beanstalk, AWS Elasticache & AWS RDS Instan
 
 ## High-level Architecture Overview.
 
-Client: 
+### Client: 
 
 nginx hosted React site.
 
-Nginx:
+### Nginx:
 
 Path based routing to the React server (eg: /index.html or /main.js) and to the Express server (eg: /api/values/current/).
 
-Server:
+### Server:
 
 Express server, when given a number from the Client, will store it in Postgres DB (historical data) and into the Redis DB (calculations). 
 If a number is not in the Redis DB, the Worker service is called.
 
-Worker:
+### Worker:
 
 Watches the Redis DB for new indicies, pulls each new indicies, calculates the new value then places into Redis.
 
-Redis:
+### Redis:
 
 Stores the "Calculated Values" data in Redis.
 In development, this is a local redis container. In production, it leverages AWS Elasticache.
 
-Postgres:
+### Postgres:
 
 Stores previously generated results. "Values I have seen" on the frontend
 In development, this is a local postgres container. In production, it leverages AWS RDS.
